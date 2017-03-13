@@ -1,0 +1,2 @@
+# Paginator
+A pagination component
