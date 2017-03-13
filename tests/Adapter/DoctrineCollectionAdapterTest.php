@@ -1,21 +1,22 @@
 <?php
-namespace MeetNedz\Component\Paginator\Tests\Adapter;
+namespace MeetNeedz\Component\Paginator\Tests\Adapter;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use MeetNeedz\Component\Paginator\Adapter\DoctrineCollectionAdapter;
-use MeetNeedz\Component\Paginator\Tests\Adapter\AbstractAdapterTest;
 
 /**
  * Class DoctrineCollectionAdapterTest
  *
  * @author Raphael De Freitas <raphael@de-freitas.net>
  */
-class DoctrineCollectionAdapterTest extends AbstractAdapterTest
+class DoctrineCollectionAdapterTest extends \PHPUnit_Framework_TestCase implements AdapterTestInterface
 {
+    use AdapterTestTrait;
+
     /**
      * @inheritDoc
      */
-    protected function getAdapter()
+    public function getAdapter()
     {
         $data = [];
         for ($i = 0; $i < 42; $i++) {
@@ -28,7 +29,7 @@ class DoctrineCollectionAdapterTest extends AbstractAdapterTest
     /**
      * @inheritDoc
      */
-    protected function isAvailable()
+    public function isAvailable()
     {
         return interface_exists('Doctrine\Common\Collections\Collection') && class_exists('Doctrine\Common\Collections\ArrayCollection');
     }

@@ -1,29 +1,13 @@
 <?php
 namespace MeetNeedz\Component\Paginator\Tests\Adapter;
 
-use MeetNeedz\Component\Paginator\Adapter\AdapterInterface;
-
 /**
- * Class AbstractAdapterTest
+ * Trait AdapterTestTrait
  *
  * @author Raphael De Freitas <raphael.defreitas@meetneedz.com>
  */
-abstract class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
+trait AdapterTestTrait
 {
-    /**
-     * Gets the adapter to test
-     *
-     * @return AdapterInterface
-     */
-    abstract protected function getAdapter();
-
-    /**
-     * Checks if the test is available
-     *
-     * @return bool
-     */
-    abstract protected function isAvailable();
-
     /**
      * @inheritdoc
      */

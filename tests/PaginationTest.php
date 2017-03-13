@@ -5,7 +5,6 @@ use MeetNeedz\Component\Paginator\Adapter\AdapterInterface;
 use MeetNeedz\Component\Paginator\Adapter\NullAdapter;
 use MeetNeedz\Component\Paginator\Exception\LogicException;
 use MeetNeedz\Component\Paginator\Pagination;
-use Prophecy\Argument;
 
 /**
  * Class PaginationTest

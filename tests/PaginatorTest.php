@@ -16,6 +16,7 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
     public function testPaginateReturnsPaginationInstance()
     {
         $paginator = new Paginator();
+        /** @var AdapterInterface $adapter */
         $adapter = $this->prophesize(AdapterInterface::class)->reveal();
         $pagination = $paginator->paginate($adapter);
 
