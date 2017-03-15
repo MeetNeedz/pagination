@@ -34,4 +34,30 @@ class NullAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter = new NullAdapter(42);
         $this->assertEquals(42, $adapter->getTotalItems());
     }
+
+    public function testLastItems()
+    {
+        $adapter = new NullAdapter(42);
+        $lastItems = $adapter->getSlice(37);
+
+        $this->assertCount(5, $lastItems);
+        $this->assertEquals(null, $lastItems[0]);
+        $this->assertEquals(null, $lastItems[1]);
+        $this->assertEquals(null, $lastItems[2]);
+        $this->assertEquals(null, $lastItems[3]);
+        $this->assertEquals(null, $lastItems[4]);
+    }
+
+    public function testLastItemsFromEnd()
+    {
+        $adapter = new NullAdapter(42);
+        $lastItems = $adapter->getSlice(-5);
+
+        $this->assertCount(5, $lastItems);
+        $this->assertEquals(null, $lastItems[0]);
+        $this->assertEquals(null, $lastItems[1]);
+        $this->assertEquals(null, $lastItems[2]);
+        $this->assertEquals(null, $lastItems[3]);
+        $this->assertEquals(null, $lastItems[4]);
+    }
 }

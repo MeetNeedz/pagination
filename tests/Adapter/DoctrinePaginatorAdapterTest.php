@@ -40,7 +40,7 @@ class DoctrinePaginatorAdapterTest extends DoctrineTestCase
     {
         $entities = [];
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 42; $i++) {
             $list = new MyList();
             $list->name = sprintf('list-%d', $i + 1);
             for ($j = 0; $j < $i; $j++) {
@@ -62,22 +62,48 @@ class DoctrinePaginatorAdapterTest extends DoctrineTestCase
         $slice = $adapter->getSlice(0, 0);
         $this->assertEquals(0, count($slice));
 
-        $slice = $adapter->getSlice(0, 5);
-        $this->assertEquals(5, count($slice));
+        $slice = $adapter->getSlice(0, 42);
+        $this->assertEquals(42, count($slice));
 
         $slice = $adapter->getSlice(0, 10);
-        $this->assertEquals(5, count($slice));
+        $this->assertEquals(10, count($slice));
 
-        $slice = $adapter->getSlice(1, 1);
-        $this->assertEquals(1, count($slice));
+        $slice = $adapter->getSlice(40, 42);
+        $this->assertEquals(2, count($slice));
 
-        $slice = $adapter->getSlice(10, 20);
+        $slice = $adapter->getSlice(45, 50);
         $this->assertEquals(0, count($slice));
     }
 
     public function testTotalItems()
     {
         $adapter = new DoctrinePaginatorAdapter($this->entityManager->createQuery('SELECT l FROM MeetNeedz\Component\Paginator\Tests\Adapter\DoctrinePaginator\MyList l'));
-        $this->assertEquals(5, $adapter->getTotalItems());
+        $this->assertEquals(42, $adapter->getTotalItems());
+    }
+
+    public function testLastItems()
+    {
+        $adapter = new DoctrinePaginatorAdapter($this->entityManager->createQuery('SELECT l FROM MeetNeedz\Component\Paginator\Tests\Adapter\DoctrinePaginator\MyList l'));
+        $lastItems = $adapter->getSlice(37);
+
+        $this->assertCount(5, $lastItems);
+        $this->assertEquals('list-38', $lastItems[0]->name);
+        $this->assertEquals('list-39', $lastItems[1]->name);
+        $this->assertEquals('list-40', $lastItems[2]->name);
+        $this->assertEquals('list-41', $lastItems[3]->name);
+        $this->assertEquals('list-42', $lastItems[4]->name);
+    }
+
+    public function testLastItemsFromEnd()
+    {
+        $adapter = new DoctrinePaginatorAdapter($this->entityManager->createQuery('SELECT l FROM MeetNeedz\Component\Paginator\Tests\Adapter\DoctrinePaginator\MyList l'));
+        $lastItems = $adapter->getSlice(-5);
+
+        $this->assertCount(5, $lastItems);
+        $this->assertEquals('list-38', $lastItems[0]->name);
+        $this->assertEquals('list-39', $lastItems[1]->name);
+        $this->assertEquals('list-40', $lastItems[2]->name);
+        $this->assertEquals('list-41', $lastItems[3]->name);
+        $this->assertEquals('list-42', $lastItems[4]->name);
     }
 }

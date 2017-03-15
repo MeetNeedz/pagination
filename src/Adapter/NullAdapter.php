@@ -28,14 +28,16 @@ class NullAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length = null, $preserveKeys = false)
     {
+        $offset = $offset < 0 ? $offset + $this->getTotalItems() : $offset;
+
         if ($this->totalItems < $offset) {
             return [];
         }
-        $size = $length > $this->totalItems - $offset ? $this->totalItems - $offset : $length;
+        $size = $length === null || $length > $this->totalItems - $offset ? $this->totalItems - $offset : $length;
 
-        return array_fill(0, $size, null);
+        return array_fill($preserveKeys ? $offset : 0, $size, null);
     }
 
     /**

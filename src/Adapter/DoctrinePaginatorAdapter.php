@@ -34,12 +34,14 @@ class DoctrinePaginatorAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length = null, $preserveKeys = false)
     {
-        $this->paginator
-            ->getQuery()
-            ->setFirstResult($offset)
-            ->setMaxResults($length);
+        $offset = $offset < 0 ? $offset + $this->getTotalItems() : $offset;
+        $query = $this->paginator->getQuery();
+        $query->setFirstResult($offset);
+        if ($length !== null) {
+            $query->setMaxResults($length);
+        }
 
         return $this->paginator->getIterator();
     }
