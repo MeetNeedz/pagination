@@ -28,9 +28,10 @@ class ArrayAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length = null, $preserveKeys = false)
     {
-        return array_slice($this->array, $offset, $length);
+        $offset = $offset < 0 ? $offset + $this->getTotalItems() : $offset;
+        return array_slice($this->array, $offset, $length, $preserveKeys);
     }
 
     /**

@@ -46,4 +46,30 @@ class ArrayAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter = $this->getAdapter();
         $this->assertEquals(42, $adapter->getTotalItems());
     }
+
+    public function testLastItems()
+    {
+        $adapter = $this->getAdapter();
+        $lastItems = $adapter->getSlice(37);
+
+        $this->assertCount(5, $lastItems);
+        $this->assertEquals('array-item-38', $lastItems[0]);
+        $this->assertEquals('array-item-39', $lastItems[1]);
+        $this->assertEquals('array-item-40', $lastItems[2]);
+        $this->assertEquals('array-item-41', $lastItems[3]);
+        $this->assertEquals('array-item-42', $lastItems[4]);
+    }
+
+    public function testLastItemsFromEnd()
+    {
+        $adapter = $this->getAdapter();
+        $lastItems = $adapter->getSlice(-5);
+
+        $this->assertCount(5, $lastItems);
+        $this->assertEquals('array-item-38', $lastItems[0]);
+        $this->assertEquals('array-item-39', $lastItems[1]);
+        $this->assertEquals('array-item-40', $lastItems[2]);
+        $this->assertEquals('array-item-41', $lastItems[3]);
+        $this->assertEquals('array-item-42', $lastItems[4]);
+    }
 }

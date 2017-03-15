@@ -30,9 +30,11 @@ class DoctrineCollectionAdapter implements AdapterInterface
     /**
      * @inheritDoc
      */
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length = null, $preserveKeys = false)
     {
-        return $this->collection->slice($offset, $length);
+        $offset = $offset < 0 ? $offset + $this->getTotalItems() : $offset;
+        $slice = $this->collection->slice($offset, $length);
+        return $preserveKeys ? $slice : array_values($slice);
     }
 
     /**

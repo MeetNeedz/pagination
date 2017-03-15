@@ -12,12 +12,13 @@ interface AdapterInterface
     /**
      * Gets a slice.
      *
-     * @param integer $offset
-     * @param integer $length
+     * @param int $offset
+     * @param int|null $length
+     * @param bool $preserveKeys
      *
      * @return array|\Iterator|\IteratorAggregate
      */
-    public function getSlice($offset, $length);
+    public function getSlice($offset, $length = null, $preserveKeys = false);
 
     /**
      * Gets the total of items.
