@@ -1,43 +1,30 @@
 <?php
 namespace MeetNeedz\Component\Paginator\Tests\Adapter;
 
-use MeetNeedz\Component\Paginator\Adapter\AdapterInterface;
+use MeetNeedz\Component\Paginator\Adapter\ArrayAdapter;
 
 /**
- * Class AbstractAdapterTest
+ * Class ArrayAdapterTest
  *
  * @author Raphael De Freitas <raphael.defreitas@meetneedz.com>
  */
-abstract class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
+class ArrayAdapterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Gets the adapter to test
-     *
-     * @return AdapterInterface
+     * @inheritDoc
      */
-    abstract protected function getAdapter();
-
-    /**
-     * Checks if the test is available
-     *
-     * @return bool
-     */
-    abstract protected function isAvailable();
-
-    /**
-     * @inheritdoc
-     */
-    protected function setUp()
+    public function getAdapter()
     {
-        if ($this->isAvailable() === false) {
-            $this->markTestSkipped(sprintf('The test "%s" is not available.', get_class($this)));
+        $data = [];
+        for ($i = 0; $i < 42; $i++) {
+            $data[] = 'array-item-' . ($i + 1);
         }
+        return new ArrayAdapter($data);
     }
 
     public function testSlices()
     {
         $adapter = $this->getAdapter();
-
         $slice = $adapter->getSlice(0, 0);
         $this->assertEquals(0, count($slice));
 

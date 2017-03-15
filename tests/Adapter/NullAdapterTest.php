@@ -1,7 +1,6 @@
 <?php
 namespace MeetNeedz\Component\Paginator\Tests\Adapter;
 
-use MeetNeedz\Component\Paginator\Adapter\AdapterInterface;
 use MeetNeedz\Component\Paginator\Adapter\NullAdapter;
 
 /**
@@ -9,21 +8,30 @@ use MeetNeedz\Component\Paginator\Adapter\NullAdapter;
  *
  * @author Raphael De Freitas <raphael.defreitas@meetneedz.com>
  */
-class NullAdapterTest extends AbstractAdapterTest
+class NullAdapterTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @inheritDoc
-     */
-    protected function getAdapter()
+    public function testSlices()
     {
-        return new NullAdapter(42);
+        $adapter = new NullAdapter(42);
+        $slice = $adapter->getSlice(0, 0);
+        $this->assertEquals(0, count($slice));
+
+        $slice = $adapter->getSlice(0, 42);
+        $this->assertEquals(42, count($slice));
+
+        $slice = $adapter->getSlice(0, 50);
+        $this->assertEquals(42, count($slice));
+
+        $slice = $adapter->getSlice(40, 50);
+        $this->assertEquals(2, count($slice));
+
+        $slice = $adapter->getSlice(45, 50);
+        $this->assertEquals(0, count($slice));
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function isAvailable()
+    public function testTotalItems()
     {
-        return true;
+        $adapter = new NullAdapter(42);
+        $this->assertEquals(42, $adapter->getTotalItems());
     }
 }
